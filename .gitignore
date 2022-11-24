@@ -3,3 +3,6 @@
 /.mvn/
 /${project.build.directory}/
 /target/
+/mvnw
+/mvnw.cmd
+/phonebook.iml
