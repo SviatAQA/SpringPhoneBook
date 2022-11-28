@@ -7,13 +7,13 @@ import springcourse.phonebook.model.UserContact;
 import java.util.List;
 
 public interface UserContactService {
-    UserContact save(UserContact userContact) throws UserContactAlreadyExistsException;
+    UserContact save(String contactName, List<String> phoneNumbers) throws UserContactAlreadyExistsException;
 
     List<UserContact> findAll();
 
     UserContact findByName(String contactName) throws UserContactNotFoundException;
 
-    UserContact updateContact(UserContact userContact) throws UserContactNotFoundException;
+    UserContact updateContact(String contactName, List<String> phoneNumbers) throws UserContactNotFoundException;
 
     void deleteContact(String contactName)  throws UserContactNotFoundException;
 }

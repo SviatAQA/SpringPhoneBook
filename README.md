@@ -15,7 +15,7 @@ Sample request body:
 
 {
     "contactName" : "Sviat",
-    "phoneNumber" : "911"
+    "phoneNumbers" : ["+380932074", "911"]
 }
 ``` 
 
@@ -30,10 +30,18 @@ GET:  /api/v1/contacts
 ```shell 
 GET: /api/v1/contacts/{userContactName}
 ``` 
-- Update contact by name using parameter "phoneNumber"
+- Update contact 
 
 ```shell 
-PUT: /api/v1/contacts/{userContactName}?phoneNumber={phoneNumber}
+PUT: /api/v1/contacts/update
+
+Sample request body:
+
+{
+    "contactName" : "Sviat",
+    "phoneNumbers" : ["+38093207", "911"]
+}
+
 ``` 
 -   Delete contact by name
 

@@ -16,12 +16,15 @@ public class UserContactServiceImpl implements UserContactService {
     private UserContactRepository userContactRepository;
 
     @Override
-    public UserContact save(UserContact userContact) throws UserContactAlreadyExistsException {
-        if (verifyExistingUserContact(userContact)) {
+    public UserContact save(String contactName, List<String> phoneNumbers) throws UserContactAlreadyExistsException {
+        if (verifyExistingUserContact(contactName)) {
             throw new UserContactAlreadyExistsException();
         }
-        userContactRepository.save(userContact);
-        return userContact;
+        UserContact newContact = new UserContact();
+        newContact.setContactName(contactName);
+        newContact.setPhoneNumbers(phoneNumbers);
+        userContactRepository.save(newContact);
+        return newContact;
     }
 
     @Override
@@ -35,11 +38,11 @@ public class UserContactServiceImpl implements UserContactService {
     }
 
     @Override
-    public UserContact updateContact(UserContact userContact) throws UserContactNotFoundException {
-        UserContact existingContact = findByName(userContact.getContactName());
-        existingContact.setPhoneNumbers(userContact.getPhoneNumbers());
-        userContactRepository.save(userContact);
-        return userContact;
+    public UserContact updateContact(String contactName, List<String> phoneNumbers) throws UserContactNotFoundException {
+        UserContact existingContact = findByName(contactName);
+        existingContact.setPhoneNumbers(phoneNumbers);
+        userContactRepository.save(existingContact);
+        return existingContact;
     }
 
     @Override
@@ -48,8 +51,8 @@ public class UserContactServiceImpl implements UserContactService {
         userContactRepository.delete(userContact);
     }
 
-    private boolean verifyExistingUserContact(UserContact userContact) {
-        return userContactRepository.findByContactName(userContact.getContactName()).isPresent();
+    private boolean verifyExistingUserContact(String userContact) {
+        return userContactRepository.findByContactName(userContact).isPresent();
     }
 
 }

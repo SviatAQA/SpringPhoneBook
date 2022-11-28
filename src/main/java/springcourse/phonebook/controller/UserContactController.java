@@ -23,21 +23,21 @@ public class UserContactController {
     @ResponseBody
     public UserContact createUser(@RequestBody UserContact userContact) {
         try {
-            return userContactService.save(userContact);
+            return userContactService.save(userContact.getContactName(),userContact.getPhoneNumbers());
         } catch (UserContactAlreadyExistsException exc) {
-            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "Such contact is already exist in application: " + userContact.getContactName());
+            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "Such contact is already exist in application: " + userContact.getContactName() );
         }
     }
 
     @PutMapping(path = "/contacts/update")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    public UserContact updateContactByName(@RequestBody UserContact updatedUserContact) {
+    public UserContact updateContactByName(@RequestBody UserContact userContact) {
         try {
-            return userContactService.updateContact(updatedUserContact);
+            return userContactService.updateContact(userContact.getContactName(), userContact.getPhoneNumbers());
         } catch (UserContactNotFoundException exc) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Such contact is not present: " + updatedUserContact.getContactName());
+                    HttpStatus.NOT_FOUND, "Such contact is not present: " + userContact.getContactName());
         }
     }
 

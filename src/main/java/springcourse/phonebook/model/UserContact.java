@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,8 @@ public class UserContact {
     private String contactName;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Size(min = 3, max = 16, message
+            = "Phone number must be between 3 and 16 digits")
     private List<String> phoneNumbers;
 
 }
