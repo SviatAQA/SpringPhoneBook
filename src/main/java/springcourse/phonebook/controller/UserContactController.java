@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import springcourse.phonebook.exception.UserContactAlreadyExistsException;
 import springcourse.phonebook.exception.UserContactNotFoundException;
 import springcourse.phonebook.model.UserContact;
 import springcourse.phonebook.service.UserContactService;
@@ -21,7 +22,11 @@ public class UserContactController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     public UserContact createUser(@RequestBody UserContact userContact) {
+        try {
             return userContactService.save(userContact);
+        } catch (UserContactAlreadyExistsException exc) {
+            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "Such contact is already exist in application: " + userContact.getContactName());
+        }
     }
 
     @PutMapping(path = "/contacts/update")
