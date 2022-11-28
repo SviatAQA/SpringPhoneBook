@@ -21,19 +21,18 @@ public class UserContactController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     public UserContact createUser(@RequestBody UserContact userContact) {
-        return userContactService.save(userContact);
+            return userContactService.save(userContact);
     }
 
-    @PutMapping(path = "/contacts/{userContactName}")
+    @PutMapping(path = "/contacts/update")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    public UserContact updateContactByName(@PathVariable("userContactName") String userContactName,
-                                           @RequestParam(name = "phoneNumber") String phoneNumber) {
+    public UserContact updateContactByName(@RequestBody UserContact updatedUserContact) {
         try {
-            return userContactService.updateContact(userContactName, phoneNumber);
+            return userContactService.updateContact(updatedUserContact);
         } catch (UserContactNotFoundException exc) {
             throw new ResponseStatusException(
-                   HttpStatus.NOT_FOUND, "Such contact is not present: " + userContactName );
+                    HttpStatus.NOT_FOUND, "Such contact is not present: " + updatedUserContact.getContactName());
         }
     }
 
